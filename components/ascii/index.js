@@ -27,7 +27,7 @@ function Scene() {
   const [asset, setAsset] = useState('/reline-3d.glb');
   const { viewport, camera } = useThree();
 
-  // Adjust the position by 33.33% of the viewport height
+  // Adjust the position by 10% of the viewport height
   const offsetY = -0.1 * viewport.height;
 
   const gltfLoader = useMemo(() => {
@@ -42,8 +42,15 @@ function Scene() {
 
   const [mixer, setMixer] = useState();
 
-  useFrame((_, t) => {
-    mixer?.update(t);
+  useFrame((_, delta) => {
+    mixer?.update(delta);
+
+    if (ref.current) {
+      // Apply rotation in all axes over time
+      ref.current.rotation.x += delta * 0.5; // Rotate on X-axis
+      ref.current.rotation.y += delta * 0.5; // Rotate on Y-axis
+      ref.current.rotation.z += delta * 0.5; // Rotate on Z-axis
+    }
   });
 
   const gltf = useMemo(() => {
