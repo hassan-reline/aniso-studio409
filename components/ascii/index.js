@@ -24,7 +24,7 @@ const ui = tunnel();
 function Scene() {
   const ref = useRef();
   const { fit } = useContext(AsciiContext);
-  const [asset, setAsset] = useState('/global-big.glb');
+  const [asset, setAsset] = useState('public/reline-3d.glb');
   const { viewport, camera } = useThree();
 
   // Adjust the position by 33.33% of the viewport height
