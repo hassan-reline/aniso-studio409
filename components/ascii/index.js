@@ -28,7 +28,7 @@ function Scene() {
   const { viewport, camera } = useThree();
 
   // Adjust the position by 33.33% of the viewport height
-  const offsetY = -0.3333 * viewport.height;
+  const offsetY = -0.1 * viewport.height;
 
   const gltfLoader = useMemo(() => {
     const loader = new GLTFLoader();
