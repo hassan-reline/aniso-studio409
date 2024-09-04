@@ -23,6 +23,7 @@ const ui = tunnel();
 
 function Scene() {
   const ref = useRef();
+  const controlsRef = useRef(); // Ref for OrbitControls
   const { fit } = useContext(AsciiContext);
   const [asset, setAsset] = useState('/reline-3d.glb');
   const { viewport, camera } = useThree();
@@ -41,15 +42,14 @@ function Scene() {
   }, []);
 
   const [mixer, setMixer] = useState();
+  const [isUserInteracting, setIsUserInteracting] = useState(false); // Track user interaction
 
   useFrame((_, delta) => {
     mixer?.update(delta);
 
-    if (ref.current) {
-      // Apply rotation in all axes over time
-      ref.current.rotation.x += delta * 0.5; // Rotate on X-axis
-      ref.current.rotation.y += delta * 0.5; // Rotate on Y-axis
-      ref.current.rotation.z += delta * 0.5; // Rotate on Z-axis
+    if (!isUserInteracting) {
+      // If user is not interacting, rotate the object on Y-axis
+      ref.current.rotation.y += delta * 0.5;
     }
   });
 
@@ -174,13 +174,14 @@ function Scene() {
         {gltf && (
           <group>
             <OrbitControls
+              ref={controlsRef}
               makeDefault
               enableZoom={false}
               enablePan={false}
-              maxPolarAngle={Math.PI / 2}
-              minPolarAngle={Math.PI / 2}
-              autoRotate={true}
-              autoRotateSpeed={5}
+              maxPolarAngle={Math.PI} // Allow full rotation
+              minPolarAngle={0} // Allow full rotation
+              onStart={() => setIsUserInteracting(true)} // Detect when user starts interaction
+              onEnd={() => setIsUserInteracting(false)} // Detect when user stops interaction
             />
             <group>
               <group position={[0, offsetY, 0]} scale={200}>
