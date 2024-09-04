@@ -24,9 +24,8 @@ const ui = tunnel();
 function Scene() {
   const ref = useRef();
   const { fit } = useContext(AsciiContext);
-  const [asset, setAsset] = useState('public/reline-3d.glb');
+  const [asset, setAsset] = useState('/reline-3d.glb');
   const { viewport, camera } = useThree();
-  const initialCameraPosition = useRef(camera.position.clone()); // Store initial camera position
 
   // Adjust the position by 33.33% of the viewport height
   const offsetY = -0.3333 * viewport.height;
@@ -151,7 +150,6 @@ function Scene() {
     1 // Optional scaling factor
   );
 
-  // Camera behavior and interaction with the scene
   useEffect(() => {
     if (texture) {
       camera.position.set(0, 0, 5);
@@ -162,13 +160,6 @@ function Scene() {
     }
     camera.updateProjectionMatrix();
   }, [camera, texture]);
-
-  // Function to reset camera to initial position
-  const resetCamera = () => {
-    camera.position.copy(initialCameraPosition.current);
-    camera.lookAt(0, 0, 0); // Re-focus camera on the center
-    camera.updateProjectionMatrix();
-  };
 
   return (
     <>
@@ -199,11 +190,6 @@ function Scene() {
           </mesh>
         )}
       </group>
-
-      {/* Reset Camera Button */}
-      <button onClick={resetCamera} className={s.resetButton}>
-        Reset Camera
-      </button>
     </>
   );
 }
