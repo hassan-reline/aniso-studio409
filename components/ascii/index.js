@@ -272,7 +272,7 @@ function Inner() {
 }
 
 const DEFAULT = {
-  characters: ' *,    ./O#RL',
+  characters: ' ****./O@rl',
   granularity: 8,
   charactersLimit: 16,
   fontSize: 72,
