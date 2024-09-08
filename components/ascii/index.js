@@ -18,6 +18,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import tunnel from 'tunnel-rat';
 import s from './ascii.module.scss';
 import { AsciiContext } from './context';
+import { ReactLenis, useLenis } from 'lenis/react';
 
 const ui = tunnel();
 
@@ -248,8 +249,9 @@ function Postprocessing() {
 function Inner() {
   const ContextBridge = useContextBridge(AsciiContext);
 
+  // Integrate Lenis for smooth scrolling
   return (
-    <>
+    <ReactLenis root>
       <div className={s.ascii}>
         <div className={cn(s.canvas)}>
           <Canvas
@@ -275,7 +277,7 @@ function Inner() {
       </div>
       <FontEditor />
       <ui.Out />
-    </>
+    </ReactLenis>
   );
 }
 
