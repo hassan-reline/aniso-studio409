@@ -18,7 +18,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import tunnel from 'tunnel-rat';
 import s from './ascii.module.scss';
 import { AsciiContext } from './context';
-import Lenis from '@studio-freight/lenis'; // Import Lenis
 
 const ui = tunnel();
 
@@ -127,6 +126,19 @@ function Scene() {
       new TextureLoader().load(src, (texture) => {
         setTexture(texture);
       });
+    } else if (src.includes('.html')) {
+      // Handle iframe embedding
+      const iframe = document.createElement('iframe');
+      iframe.src = src;
+      iframe.style.border = 'none';
+      iframe.style.position = 'absolute';
+      iframe.style.width = '100%';
+      iframe.style.height = '100%';
+      iframe.style.top = '0';
+      iframe.style.left = '0';
+
+      const texture = new VideoTexture(iframe); // Create a texture from the iframe
+      setTexture(texture);
     }
   }, [asset]);
 
@@ -350,25 +362,3 @@ export function ASCII({ children }) {
     </AsciiContext.Provider>
   );
 }
-
-// Lenis Smooth Scroll Initialization
-useEffect(() => {
-  const lenis = new Lenis({
-    lerp: 0.1,
-    wheelMultiplier: 0.7,
-    gestureOrientation: "vertical",
-    normalizeWheel: false,
-    smoothTouch: false,
-  });
-
-  function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-
-  requestAnimationFrame(raf);
-
-  return () => {
-    lenis.destroy(); // Clean up Lenis instance on unmount
-  };
-}, []);
