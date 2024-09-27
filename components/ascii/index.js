@@ -25,7 +25,7 @@ function Scene() {
   const ref = useRef();
   const controlsRef = useRef(); // Ref for OrbitControls
   const { fit } = useContext(AsciiContext);
-  const [asset, setAsset] = useState('/reline-3d.glb');
+  const [asset, setAsset] = useState('/webflow-3d.glb');
   const { viewport, camera } = useThree();
 
   // Adjust the position by 10% of the viewport height
@@ -280,13 +280,13 @@ function Inner() {
 }
 
 const DEFAULT = {
-  characters: ' ****./O@rl',
+  characters: ' ®. *./O®rl',
   granularity: 8,
   charactersLimit: 16,
   fontSize: 72,
   fillPixels: false,
   setColor: true,
-  color: '#cd9bff',
+  color: '#6eabff',
   background: '#ffffff',
   greyscale: false,
   invert: false,
